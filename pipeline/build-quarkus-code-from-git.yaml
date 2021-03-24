@@ -61,7 +61,7 @@ spec:
     - name: TLSVERIFY
       value: "false"
     - name: IMAGE
-      value: $(params.IMAGE):$(params.git-revision)
+      value: $(params.IMAGE)-$(params.git-revision)
     - name: DOCKERFILE
       value: $(params.dockerfile)
     workspaces:
@@ -75,6 +75,6 @@ spec:
       kind: ClusterTask
     params:
     - name: SCRIPT
-      value: "oc new-app $(params.IMAGE):$(params.git-revision) --name=$(params.deployment-name)-$(params.git-revision) ; oc expose service/$(params.deployment-name)-$(params.git-revision)"
+      value: "oc new-app $(params.IMAGE)-$(params.git-revision) --name=$(params.deployment-name)-$(params.git-revision) ; oc expose service/$(params.deployment-name)-$(params.git-revision)"
     runAfter:
     - build-image
