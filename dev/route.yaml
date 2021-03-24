@@ -2,12 +2,12 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   labels:
-    app: spring-petclinic
-  name: spring-petclinic
+    app: quarkus-dev
+  name: quarkus-dev
 spec:
   port:
     targetPort: 8080-tcp
   to:
     kind: Service
-    name: spring-petclinic
+    name: quarkus-dev
     weight: 100
