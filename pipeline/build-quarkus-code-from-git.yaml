@@ -1,0 +1,80 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-quarkus-code-from-git
+spec:
+  workspaces:
+  - name: shared-workspace
+  - name: maven-settings
+  params:
+  - name: deployment-name
+    type: string
+    description: name of the deployment to be patched
+  - name: git-url
+    type: string
+    description: url of the git repo for the code of deployment
+  - name: git-revision
+    type: string
+    description: revision to be used from repo of the code for deployment
+  - name: IMAGE
+    type: string
+    description: image to be build from the code
+  - name: dockerfile
+    type: string
+    description: Dockerfile location
+  tasks:
+  - name: fetch-git-repository
+    taskRef:
+      name: git-clone
+      kind: ClusterTask
+    workspaces:
+    - name: output
+      workspace: shared-workspace
+    params:
+    - name: url
+      value: $(params.git-url)
+    - name: subdirectory
+      value: ""
+    - name: deleteExisting
+      value: "true"
+    - name: revision
+      value: $(params.git-revision)
+  - name: maven-build-and-test
+    taskRef:
+      name: maven
+      kind: ClusterTask
+    runAfter:
+      - fetch-git-repository
+    workspaces:
+      - name: source
+        workspace: shared-workspace
+      - name: maven-settings
+        workspace: maven-settings
+    params:
+      - name: GOALS
+        value: ["clean", "package"]
+  - name: build-image
+    taskRef:
+      name: buildah
+      kind: ClusterTask
+    params:
+    - name: TLSVERIFY
+      value: "false"
+    - name: IMAGE
+      value: $(params.IMAGE):$(params.git-revision)
+    - name: DOCKERFILE
+      value: $(params.dockerfile)
+    workspaces:
+    - name: source
+      workspace: shared-workspace
+    runAfter:
+    - maven-build-and-test
+  - name: run-oc
+    taskRef:
+      name: openshift-client
+      kind: ClusterTask
+    params:
+    - name: SCRIPT
+      value: "oc new-app $(params.IMAGE):$(params.git-revision) --name=$(params.deployment-name)-$(params.git-revision) ; oc expose service/$(params.deployment-name)-$(params.git-revision)"
+    runAfter:
+    - build-image
