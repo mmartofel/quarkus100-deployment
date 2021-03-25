@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: quarkus-test
+    app.kubernetes.io/component: web
+    app.kubernetes.io/instance: quarkus-test
+    app.kubernetes.io/name: quarkus-test
+    app.kubernetes.io/part-of: ENV-test
+    app.openshift.io/runtime: quarkus
+  name: quarkus-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: quarkus-test
+  template:
+    metadata:
+      labels:
+        app: quarkus-test
+    spec:
+      containers:
+      - name: quarkus-test
+        imagePullPolicy: Always
+        image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-main
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 45
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 45
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5

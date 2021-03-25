@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: development
+  name: production
 spec:
   destination:
     name: ''
-    namespace: dev
+    namespace: prod
     server: 'https://kubernetes.default.svc'
   source:
-    path: dev
+    path: prod
     repoURL: 'https://github.com/mmartofel/quarkus100-deployment.git'
     targetRevision: HEAD
   project: default

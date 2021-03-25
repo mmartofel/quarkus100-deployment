@@ -12,6 +12,6 @@ PROJECT_NAME=`oc project --short=true`
     -p deployment-name=$DEPLOYMENT_NAME \
     -p git-revision=$1 \
     -p git-url=https://github.com/mmartofel/quarkus100.git \
-    -p IMAGE=image-registry.openshift-image-registry.svc:5000/$DEPLOYMENT_NAME \
+    -p IMAGE=image-registry.openshift-image-registry.svc:5000/$PROJECT_NAME/$DEPLOYMENT_NAME \
     -n $PROJECT_NAME
 
