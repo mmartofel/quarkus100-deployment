@@ -23,7 +23,7 @@ spec:
       containers:
       - name: quarkus-test
         imagePullPolicy: Always
-        image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v08
+        image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v07
         livenessProbe:
           failureThreshold: 3
           httpGet:
