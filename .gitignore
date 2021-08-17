@@ -3,6 +3,8 @@ HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
+token
+
 ### STS ###
 .apt_generated
 .classpath
