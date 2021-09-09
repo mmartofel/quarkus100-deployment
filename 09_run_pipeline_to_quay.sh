@@ -12,5 +12,5 @@ PROJECT_NAME=`oc project --short=true`
     -p deployment-name=$DEPLOYMENT_NAME \
     -p git-revision=$1 \
     -p git-url=https://github.com/mmartofel/quarkus100.git \
-    -p IMAGE=quay.io/pminkows/$DEPLOYMENT_NAME \
+    -p IMAGE=$DEPLOYMENT_NAME \
     -n $PROJECT_NAME
