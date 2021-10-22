@@ -23,7 +23,7 @@ spec:
       containers:
       - name: quarkus-dev
         imagePullPolicy: Always
-        image: quay.io/pminkows/quarkus100:v25
+        image: quay.io/pminkows/quarkus100:v26
         livenessProbe:
           failureThreshold: 3
           httpGet:
