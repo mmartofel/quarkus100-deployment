@@ -23,11 +23,7 @@ spec:
       containers:
       - name: quarkus-dev
         imagePullPolicy: Always
-<<<<<<< HEAD
         image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v23
-=======
-        image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v26
->>>>>>> 221909a00d7fc4d82f8ca0b70c52b266eedb2d23
         livenessProbe:
           failureThreshold: 3
           httpGet:
