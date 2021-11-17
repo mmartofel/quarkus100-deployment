@@ -1,6 +1,8 @@
 
 oc adm policy add-cluster-role-to-user cluster-admin -z argocd-cluster-argocd-application-controller -n openshift-gitops
 oc adm policy add-cluster-role-to-user cluster-admin -z argocd-cluster-argocd-server -n openshift-gitops
+oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller -n openshift-gitops
+oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-server -n openshift-gitops
 
 oc adm policy add-cluster-role-to-user cluster-admin -z default -n dev
 oc adm policy add-cluster-role-to-user cluster-admin -z builder -n dev
