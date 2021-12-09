@@ -1,0 +1,42 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: copy-image-to-quay
+spec:
+  workspaces:
+  - name: images-url
+  - name: shared-workspace
+  params:
+  - name: srcImageURL
+    type: string
+    description: Source image repo URL
+    default: "image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v30"
+  - name: destImageURL
+    type: string
+    description: Sesdtination image repo URL
+    default: "quay.io/repository/mmartofe/cicd/q100:v30"
+  - name: srcTLSverify
+    type: string
+    description: Verify TLS at source 
+    default: "false"
+  - name: destTLSverify
+    type: string
+    description: Verify TLS at destination
+    default: "false" 
+  tasks:
+  - name: just-copy-nothing-else
+    taskRef:
+      name: skopeo-copy
+      kind: ClusterTask
+    workspaces:
+    - name: output
+      workspace: shared-workspace
+    params:
+    - name: srcImageURL
+      value: $(params.srcImageURL)
+    - name: destImageURL
+      value: $(params.destImageURL)
+    - name: srcTLSverify
+      value: $(params.srcTLSverify)
+    - name: destTLSverify
+      value: $(params.destTLSverify)
