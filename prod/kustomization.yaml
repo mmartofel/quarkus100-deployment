@@ -1,4 +1,5 @@
 resources:
+- project.yaml
 - deployment.yaml
 - service.yaml
 - route.yaml

@@ -1,0 +1,31 @@
+kind: Project
+apiVersion: project.openshift.io/v1
+metadata:
+  name: dev
+  labels:
+    kubernetes.io/metadata.name: dev
+    openshift.io/display-name: 'DEVELOPMENT'
+    openshift-pipelines.tekton.dev/namespace-reconcile-version: v1.5
+  annotations:
+    openshift.io/description: 'Development namestace managed by RedHat Openshift GitOps'
+  managedFields:
+    - manager: cluster-policy-controller
+      operation: Update
+      apiVersion: v1
+    - manager: openshift-apiserver
+      operation: Update
+      apiVersion: v1
+    - manager: openshift-controller-manager
+      operation: Update
+      apiVersion: v1
+    - manager: openshift-pipelines-operator
+      operation: Update
+      apiVersion: v1
+    - manager: olm
+      operation: Update
+      apiVersion: v1
+spec:
+  finalizers:
+    - kubernetes
+status:
+  phase: Active
