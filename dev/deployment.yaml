@@ -23,7 +23,7 @@ spec:
       containers:
       - name: quarkus-dev
         imagePullPolicy: Always
-        image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v32
+        image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v35
         ports:
         - containerPort: 8080
           protocol: TCP
