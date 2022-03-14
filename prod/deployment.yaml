@@ -3,25 +3,25 @@ kind: Deployment
 metadata:
   annotations:
   labels:
-    app: quarkus-dev
+    app: quarkus-prod
     app.kubernetes.io/component: web
-    app.kubernetes.io/instance: quarkus-dev
-    app.kubernetes.io/name: quarkus-dev
-    app.kubernetes.io/part-of: ENV-DEV
+    app.kubernetes.io/instance: quarkus-prod
+    app.kubernetes.io/name: quarkus-prod
+    app.kubernetes.io/part-of: ENV-PROD
     app.openshift.io/runtime: quarkus
-  name: quarkus-dev
+  name: quarkus-prod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: quarkus-dev
+      app: quarkus-prod
   template:
     metadata:
       labels:
-        app: quarkus-dev
+        app: quarkus-prod
     spec:
       containers:
-      - name: quarkus-dev
+      - name: quarkus-prod
         imagePullPolicy: Always
         image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v33
         ports:
