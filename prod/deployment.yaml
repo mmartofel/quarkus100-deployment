@@ -3,47 +3,47 @@ kind: Deployment
 metadata:
   annotations:
   labels:
-    app: quarkus-prod
+    app: quarkus-dev
     app.kubernetes.io/component: web
-    app.kubernetes.io/instance: quarkus-prod
-    app.kubernetes.io/name: quarkus-prod
-    app.kubernetes.io/part-of: ENV-prod
+    app.kubernetes.io/instance: quarkus-dev
+    app.kubernetes.io/name: quarkus-dev
+    app.kubernetes.io/part-of: ENV-DEV
     app.openshift.io/runtime: quarkus
-  name: quarkus-prod
+  name: quarkus-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: quarkus-prod
+      app: quarkus-dev
   template:
     metadata:
       labels:
-        app: quarkus-prod
+        app: quarkus-dev
     spec:
       containers:
-      - name: quarkus-prod
+      - name: quarkus-dev
         imagePullPolicy: Always
-        image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v29
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 45
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
+        image: image-registry.openshift-image-registry.svc:5000/project01/quarkus100-v30
         ports:
         - containerPort: 8080
           protocol: TCP
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /q/health/live
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 1
         readinessProbe:
           failureThreshold: 3
           httpGet:
-            path: /
+            path: /q/health/ready
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 45
-          periodSeconds: 10
+          initialDelaySeconds: 10
+          periodSeconds: 5
           successThreshold: 1
           timeoutSeconds: 5
